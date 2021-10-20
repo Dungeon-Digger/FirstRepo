@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "nlohmann/json.hpp"
 using namespace std;
 
 class Human {
@@ -23,6 +23,22 @@ public:
 	Human operator +(Human& other) {
 		Human tmp(this->name, (age + other.GetAge()), (weight + other.GetWeight()));
 		return tmp;
+	}
+
+	string jsonSerialize() {
+		nlohmann::json j;
+		j["name"] = GetName();
+		j["age"] = GetAge();
+		j["weighte"] = GetWeight();
+		string serialized = j.dump();
+		return serialized;
+	}
+	void jsonDesrialize(string ser) {
+		nlohmann::json j2 = nlohmann::json::parse(ser);
+		SetName(j2["name"].get<string>());
+		SetAge(j2["age"].get<int>());
+		SetWeight(j2["weight"].get <int>());
+
 	}
 };
 
