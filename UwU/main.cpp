@@ -18,6 +18,12 @@ public:
 	int GetWeight() { return weight; }
 
 	void Print() { cout << "Human named " << name << " aged " << age << " with weight " << weight << endl; }
+	void Print(Human other) { cout << "Human named " << other.GetName() << " aged " << other.GetAge() << " with weight " << other.GetWeight() << endl; }
+
+	Human operator +(Human& other) {
+		Human tmp(this->name, (age + other.GetAge()), (weight + other.GetWeight()));
+		return tmp;
+	}
 };
 
 class Student : public Human {
@@ -48,6 +54,8 @@ public:
 };
 
 void main() {
-	Student s1;
-	s1.Print();
+	Human h1("John", 10, 50);
+	Human h2("Max", 10, 55);
+
+	h1.Print(h1 + h2);
 }
