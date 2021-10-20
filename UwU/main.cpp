@@ -29,16 +29,18 @@ public:
 		nlohmann::json j;
 		j["name"] = GetName();
 		j["age"] = GetAge();
-		j["weighte"] = GetWeight();
-		string serialized = j.dump();
-		return serialized;
+		j["weight"] = GetWeight();
+		return j.dump();
+		
 	}
-	void jsonDesrialize(string ser) {
-		nlohmann::json j2 = nlohmann::json::parse(ser);
-		SetName(j2["name"].get<string>());
-		SetAge(j2["age"].get<int>());
-		SetWeight(j2["weight"].get <int>());
+	Human jsonDesrialize(string str) {
+		Human temp;
+			nlohmann::json object = nlohmann::json::parse(str);
 
+			SetName(object["name"].get<string>());
+			SetAge(object["age"].get<int>());
+			SetWeight(object["weight"].get <int>());;
+			return temp;
 	}
 };
 
@@ -61,7 +63,16 @@ public:
 		SetName(other.GetName());
 		SetWeight(other.GetWeight());
 	}
+	string jsonSerialize() {
+		nlohmann::json j;
+		j["name"] = GetName();
+		j["age"] = GetAge();
+		j["avMark"] = GetAvMark();
+		j["groupName"] = GetGroupName();
+		j["weight"] = GetWeight();
+		return j.dump();
 
+	}
 	void SetAvMark(int avMark) { this->avMark = avMark; };
 	void SetSetGroupName(string groupName) { this->groupName = groupName; };
 
@@ -73,5 +84,6 @@ void main() {
 	Human h1("John", 10, 50);
 	Human h2("Max", 10, 55);
 
-	h1.Print(h1 + h2);
+	
+
 }
